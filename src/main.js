@@ -51,7 +51,7 @@ const updateStyles = html => {
 
 const extractAttribName = html => {
 	const match = html.match(/([a-zA-Z0-9\-]+)=/)
-	if (match.length) {
+	if (match?.length) {
 		return match[1]
 	}
 	return null
@@ -59,7 +59,7 @@ const extractAttribName = html => {
 
 const extractTag = html => {
 	const matches = html.match(/<(?:\/)?(\w+).*(?:\/)?>/)
-	if (matches.length) {
+	if (matches?.length) {
 		return matches[1]
 	}
 	return null
@@ -71,5 +71,6 @@ module.exports = {
 	removeTags,
 	removeAttribs,
 	updateStyles,
-	extractTag
+	extractTag,
+	extractAttribName,
 }

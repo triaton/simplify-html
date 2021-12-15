@@ -5,6 +5,8 @@ const {
     tags,
     tagsRemoved,
     attribsRemoved,
+    rawAttribs,
+    attribs,
 } = require("./data");
 
 const {
@@ -12,6 +14,7 @@ const {
     removeTags,
     removeAttribs,
     extractTag,
+    extractAttribName,
 } = require('./main')
 
 test('removeComments should remove comments from input', () => {
@@ -22,6 +25,19 @@ test('extractTag should extract only the tag text', () => {
     rawTags.forEach((rawTag, index) => {
         expect(extractTag(rawTag)).toBe(tags[index])
     })
+})
+
+test('extractTag should return null for invalid input', () => {
+    expect(extractTag('style="background: black;"')).toBe(null)
+})
+
+test('extractAttribName should extract only the attribute name', () => {
+    rawAttribs.forEach((rawTag, index) => {
+        expect(extractAttribName(rawTag)).toBe(attribs[index])
+    })
+})
+test('extractAttribName should return null for invalid input', () => {
+    expect(extractAttribName('<img/>')).toBe(null)
 })
 
 test('removeTags should remove all non-whitelist tags', () => {

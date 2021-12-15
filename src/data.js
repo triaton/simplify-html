@@ -26,6 +26,9 @@ const tagsRemovedDst = `<div class="postcell"><p data-v="hello->world"></p></div
 const rawTags = ['<div style="background: black;">', '<image src="back.jpg" alt="field"/>', '<section>', '</span>']
 const tags = ['div', 'image', 'section', 'span']
 
+const rawAttribs = ['class="postcell"', 'style="background: black;"']
+const attribs = ['class', 'style']
+
 module.exports = {
     original,
     commentsRemoved,
@@ -35,4 +38,6 @@ module.exports = {
     attribsRemoved,
     rawTags,
     tags,
+    rawAttribs,
+    attribs,
 }
