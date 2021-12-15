@@ -29,6 +29,5 @@ test('removeTags should remove all non-whitelist tags', () => {
 })
 
 test('removeAttribs should remove all non-whitelist attributes', () => {
-    console.log('tagRemoved = ', tagsRemoved)
     expect(removeAttribs(tagsRemoved)).toBe(attribsRemoved);
 })

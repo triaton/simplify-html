@@ -33,7 +33,7 @@ const removeTags = html => {
 }
 
 const removeAttribs = html => {
-	const matches = html.match(/[a-zA-Z0-9\-]+=".+?"/g)
+	const matches = html.match(/\s*[a-zA-Z0-9\-]+=".*?"/g)
 	return matches.reduce((result, match) => {
 		const attribute = extractAttribName(match)
 		if (attributesWhitelist.includes(attribute)) {
@@ -41,7 +41,7 @@ const removeAttribs = html => {
 		} else {
 			return result.replace(match, '')
 		}
-	})
+	}, html)
 }
 
 const updateStyles = html => {
