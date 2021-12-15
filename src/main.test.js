@@ -15,13 +15,13 @@ const commentsRemoved = `
 const rawTags = ['<div style="background: black;">', '<image src="back.jpg" alt="field"/>', '<section>', '</span>']
 const tags = ['div', 'image', 'section', 'span']
 
-const { removeComment, extractTag } = require('index')
+const { removeComments, extractTag } = require('./main')
 
-test('removeComment should remove comments from input', () => {
-    expect(removeComment(original)).toBe(commentsRemoved);
+test('removeComments should remove comments from input', () => {
+    expect(removeComments(original)).toBe(commentsRemoved);
 })
 
-test('extractTag should extract only tag', () => {
+test('extractTag should extract only the tag text', () => {
     rawTags.forEach((rawTag, index) => {
         expect(extractTag(rawTag)).toBe(tags[index])
     })
