@@ -32,11 +32,34 @@ const removeTags = html => {
 	}, html)
 }
 
+const updateStyles = html => {
+	const match = html.match(/\s*style\s*=\s*"(\s*[a-z\-]+:[^"]*?(?:;)?)"/)
+	if (match?.length) {
+		const value = match[1]
+		const matches = value.match(/\s*[a-z\-]+:\s*[^"]*?;\s*/g)
+		return matches.reduce((result, m) => {
+			const property = extractPropertyName(m)
+			if (styleWhitelist.includes(property)) {
+				return result.replace(m, m.trim())
+			} else {
+				return result.replace(m, '')
+			}
+		}, html)
+	}
+	return html
+}
+
 const removeAttribs = html => {
 	const matches = html.match(/\s*[a-zA-Z0-9\-]+=".*?"/g)
 	return matches.reduce((result, match) => {
 		const attribute = extractAttribName(match)
 		if (attributesWhitelist.includes(attribute)) {
+			if (attribute === 'style') {
+				if (match.indexOf('Segoe')) {
+					console.log('match = ', match)
+				}
+				return result.replace(match, updateStyles(match))
+			}
 			return result
 		} else {
 			return result.replace(match, '')
@@ -44,13 +67,16 @@ const removeAttribs = html => {
 	}, html)
 }
 
-const updateStyles = html => {
-	// TODO: add implementation
-	return html;
-}
-
 const extractAttribName = html => {
 	const match = html.match(/([a-zA-Z0-9\-]+)=/)
+	if (match?.length) {
+		return match[1]
+	}
+	return null
+}
+
+const extractPropertyName = html => {
+	const match = html.match(/([a-zA-Z0-9\-]+):/)
 	if (match?.length) {
 		return match[1]
 	}
@@ -73,4 +99,5 @@ module.exports = {
 	updateStyles,
 	extractTag,
 	extractAttribName,
+	extractPropertyName,
 }

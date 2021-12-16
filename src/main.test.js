@@ -7,6 +7,10 @@ const {
     attribsRemoved,
     rawAttribs,
     attribs,
+    styleSrc,
+    styleDst,
+    rawProperties,
+    properties,
 } = require("./data");
 
 const {
@@ -15,6 +19,8 @@ const {
     removeAttribs,
     extractTag,
     extractAttribName,
+    extractPropertyName,
+    updateStyles,
 } = require('./main')
 
 test('removeComments should remove comments from input', () => {
@@ -40,6 +46,21 @@ test('extractAttribName should return null for invalid input', () => {
     expect(extractAttribName('<img/>')).toBe(null)
 })
 
+test('extractPropertyName should extract only the property name', () => {
+    rawProperties.forEach((rawProperty, index) => {
+        expect(extractPropertyName(rawProperty)).toBe(properties[index])
+    })
+})
+test('extractPropertyName should return null for invalid input', () => {
+    expect(extractPropertyName('<img/>')).toBe(null)
+})
+
+test('updateStyles should remove all non-whitelist properties', () => {
+    styleSrc.map((style, i) => {
+        expect(updateStyles(style)).toBe(styleDst[i]);
+    })
+})
+
 test('removeTags should remove all non-whitelist tags', () => {
     expect(removeTags(commentsRemoved)).toBe(tagsRemoved);
 })
@@ -47,3 +68,4 @@ test('removeTags should remove all non-whitelist tags', () => {
 test('removeAttribs should remove all non-whitelist attributes', () => {
     expect(removeAttribs(tagsRemoved)).toBe(attribsRemoved);
 })
+
