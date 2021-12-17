@@ -33,10 +33,9 @@ const removeTags = html => {
 }
 
 const updateStyles = html => {
-	const match = html.match(/\s*style\s*=\s*"(\s*[a-z\-]+:[^"]*?(?:;)?)"/)
-	if (match?.length) {
-		const value = match[1]
-		const matches = value.match(/\s*[a-z\-]+:\s*[^"]*?;\s*/g)
+	if (html.trim().startsWith('style=')) {
+		const value = html
+		const matches = value.match(/\s*[a-z\-]+:\s*((&quot;)|[^"])*?;/g)
 		return matches.reduce((result, m) => {
 			const property = extractPropertyName(m)
 			if (styleWhitelist.includes(property)) {
