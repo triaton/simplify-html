@@ -4,14 +4,9 @@ const styleWhitelist = ['font-weight', 'text-decoration']
 
 const preProcessHtml = html => {
 	let content = html;
-	// TODO: remove comment
 	content = removeComments(content);
-	console.log('comments removed = ', content)
-	// TODO: remove non-whitelisted tags (remove only openning and closing tags, not the content)
 	content = removeTags(content);
-	// TODO: remove non-whitelisted attributes on each tags
 	content = removeAttribs(content);
-	// TODO: remove unnecessary style attributes and leave only whitelisted styles
 	content = updateStyles(content);
 	return content;
 }
@@ -54,9 +49,6 @@ const removeAttribs = html => {
 		const attribute = extractAttribName(match)
 		if (attributesWhitelist.includes(attribute)) {
 			if (attribute === 'style') {
-				if (match.indexOf('Segoe')) {
-					console.log('match = ', match)
-				}
 				return result.replace(match, updateStyles(match))
 			}
 			return result
